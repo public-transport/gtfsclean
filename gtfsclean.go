@@ -9,7 +9,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"strconv"
@@ -68,7 +67,7 @@ func parseDate(str string) gtfs.Date {
 	}
 
 	if e != nil {
-		panic(fmt.Errorf("Expected YYYYMMDD date, found '%s' (%s)", str, e.Error()))
+		panic(fmt.Errorf("expected YYYYMMDD date, found '%s' (%s)", str, e.Error()))
 	}
 
 	return gtfs.NewDate(uint8(day), uint8(month), uint16(year))
@@ -78,7 +77,7 @@ func parseCoords(s string) ([][2]float64, error) {
 	coords := strings.Split(s, ",")
 
 	if len(coords)%2 != 0 {
-		return nil, errors.New("Uneven number of coordinates")
+		return nil, errors.New("uneven number of coordinates")
 	}
 
 	ret := make([][2]float64, 0)
@@ -317,7 +316,7 @@ func main() {
 
 	for _, polyFile := range polygonFiles {
 		if strings.HasSuffix(polyFile, ".json") || strings.HasSuffix(polyFile, ".geojson") {
-			json, err := ioutil.ReadFile(polyFile)
+			json, err := os.ReadFile(polyFile)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "\nCould not parse polygon filter file: ")
 				fmt.Fprintf(os.Stderr, err.Error()+".\n")
@@ -342,7 +341,7 @@ func main() {
 				}
 			}
 		} else {
-			bytes, err := ioutil.ReadFile(polyFile)
+			bytes, err := os.ReadFile(polyFile)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "\nCould not parse polygon filter file: ")
 				fmt.Fprintf(os.Stderr, err.Error()+".\n")
@@ -368,7 +367,7 @@ func main() {
 		}
 
 		// ensure polygon is closed
-		if len(poly) > 1 && (poly[0][0] != poly[len(poly)-1][0] || poly[0][0] != poly[len(poly)-1][0]) {
+		if len(poly) > 1 && (poly[0][0] != poly[len(poly)-1][0]) {
 			poly = append(poly, [2]float64{poly[0][0], poly[0][1]})
 		}
 
@@ -399,7 +398,7 @@ func main() {
 			poly[3] = [2]float64{bbox[1][0], bbox[0][1]}
 
 			// ensure polygon is closed
-			if len(poly) > 1 && (poly[0][0] != poly[len(poly)-1][0] || poly[0][0] != poly[len(poly)-1][0]) {
+			if len(poly) > 1 && (poly[0][0] != poly[len(poly)-1][0]) {
 				poly = append(poly, [2]float64{poly[0][0], poly[0][1]})
 			}
 
