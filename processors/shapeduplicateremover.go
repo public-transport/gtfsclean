@@ -8,10 +8,11 @@ package processors
 
 import (
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
 	"os"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // ShapeDuplicateRemover removes duplicate shapes
@@ -70,7 +71,7 @@ func (sdr ShapeDuplicateRemover) Run(feed *gtfsparser.Feed) {
 		if sdr.deleted[s] {
 			continue
 		}
-		eqShps := sdr.getEquShps(s, feed, chunkIdxs)
+		eqShps := sdr.getEquShps(s, chunkIdxs)
 
 		if len(eqShps) > 0 {
 			sdr.combineShapes(feed, append(eqShps, s), tidx)
@@ -83,7 +84,7 @@ func (sdr ShapeDuplicateRemover) Run(feed *gtfsparser.Feed) {
 }
 
 // Return all shapes that are equivalent (within MaxEqDist) to shape
-func (sdr *ShapeDuplicateRemover) getEquShps(shp *gtfs.Shape, feed *gtfsparser.Feed, idxs []*ShapeIdx) []*gtfs.Shape {
+func (sdr *ShapeDuplicateRemover) getEquShps(shp *gtfs.Shape, idxs []*ShapeIdx) []*gtfs.Shape {
 	rets := make([][]*gtfs.Shape, len(idxs))
 	sem := make(chan empty, len(idxs))
 

@@ -9,9 +9,10 @@ package processors
 import (
 	"errors"
 	"fmt"
+	"os"
+
 	"github.com/public-transport/gtfsparser"
 	gtfs "github.com/public-transport/gtfsparser/gtfs"
-	"os"
 )
 
 // ServiceCalDatesRemover removes any entry in calendar_dates.txt by
@@ -219,7 +220,7 @@ func (sm *ServiceCalDatesRem) freeTripId(feed *gtfsparser.Feed, prefix string) s
 			return tid
 		}
 	}
-	panic(errors.New("Ran out of free trip ids."))
+	panic(errors.New("ran out of free trip ids"))
 }
 
 // get a free service id with the given prefix
@@ -231,5 +232,5 @@ func (sm *ServiceCalDatesRem) freeServiceId(feed *gtfsparser.Feed, prefix string
 			return sid
 		}
 	}
-	panic(errors.New("Ran out of free service ids."))
+	panic(errors.New("ran out of free service ids"))
 }

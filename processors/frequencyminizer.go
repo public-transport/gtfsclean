@@ -8,13 +8,14 @@ package processors
 
 import (
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
 	"os"
 	"sort"
 	"strconv"
 	"sync"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // FrequencyMinimizer minimizes trips, stop_times and frequencies by searching optimal covers for trip times.
@@ -123,7 +124,7 @@ func (m FrequencyMinimizer) Run(feed *gtfsparser.Feed) {
 				curTrip = new(gtfs.Trip)
 
 				var newID string
-				for true {
+				for {
 					newID = t.Id + "_" + strconv.FormatInt(int64(suffixC), 10)
 					if _, in := feed.Trips[newID]; in {
 						suffixC++

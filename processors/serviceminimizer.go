@@ -8,10 +8,11 @@ package processors
 
 import (
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"os"
 	"time"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // ServiceMinimizer minimizes services by finding optimal calendar.txt and
@@ -162,7 +163,7 @@ out:
 					continue
 				}
 
-				c := sm.countExceptions(service, activeOn, d, startDiff, endDiff, a, b, e)
+				c := sm.countExceptions(activeOn, d, startDiff, endDiff, a, b, e)
 
 				if c < e {
 					e = c
@@ -182,7 +183,7 @@ out:
 	sm.updateService(service, bestMap, bestA, bestB, startTime, endTime, start, end)
 }
 
-func (sm ServiceMinimizer) countExceptions(s *gtfs.Service, actmap []bool, bm uint, startDiff int, endDiff int, a int, b int, max uint) uint {
+func (sm ServiceMinimizer) countExceptions(actmap []bool, bm uint, startDiff int, endDiff int, a int, b int, max uint) uint {
 	ret := uint(0)
 	l := len(actmap)
 

@@ -9,10 +9,11 @@ package processors
 import (
 	"errors"
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
 	"os"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // ShapeMinimizer minimizes shapes.
@@ -88,6 +89,7 @@ func (sm ShapeSnapper) Run(feed *gtfsparser.Feed) {
 func (sm *ShapeSnapper) snapTo(stop *gtfs.Stop, distT float32, shape *gtfs.Shape) (float64, float64) {
 	shp := sm.mercs[shape]
 
+	// TODO No value is equal to NaN not even NaN itself so is this if statement redundant?
 	if float64(distT) != math.NaN() {
 		for i := 1; i < len(shape.Points); i++ {
 			if shape.Points[i].Dist_traveled <= distT && i < len(shape.Points) - 1 && shape.Points[i+1].Dist_traveled >= distT {
@@ -134,5 +136,5 @@ func (sm *ShapeSnapper) freeStopId(feed *gtfsparser.Feed, suffix string) string 
 			return sid
 		}
 	}
-	panic(errors.New("Ran out of free stop ids."))
+	panic(errors.New("ran out of free stop ids"))
 }

@@ -9,10 +9,11 @@ package processors
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"hash/fnv"
 	"os"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // ServiceDuplicateRemover removes duplicate services. Services are considered equal if they
@@ -47,7 +48,7 @@ func (sdr ServiceDuplicateRemover) Run(feed *gtfsparser.Feed) {
 		}
 
 		sc := amaps[s]
-		eqServices := sdr.getEquivalentServices(s, amaps, feed, chunks[sc.hash])
+		eqServices := sdr.getEquivalentServices(s, amaps, chunks[sc.hash])
 
 		if len(eqServices) > 0 {
 			sdr.combineServices(feed, append(eqServices, s), trips)
@@ -65,7 +66,7 @@ func (sdr ServiceDuplicateRemover) Run(feed *gtfsparser.Feed) {
 }
 
 // Return the services that are equivalent to service
-func (m ServiceDuplicateRemover) getEquivalentServices(serv *gtfs.Service, amaps map[*gtfs.Service]ServiceCompressed, feed *gtfsparser.Feed, chunks [][]*gtfs.Service) []*gtfs.Service {
+func (m ServiceDuplicateRemover) getEquivalentServices(serv *gtfs.Service, amaps map[*gtfs.Service]ServiceCompressed, chunks [][]*gtfs.Service) []*gtfs.Service {
 	rets := make([][]*gtfs.Service, len(chunks))
 	sem := make(chan empty, len(chunks))
 
@@ -127,7 +128,7 @@ func (m ServiceDuplicateRemover) getActiveMaps(feed *gtfsparser.Feed) map[*gtfs.
 				cur.start = first
 				cur.end = last
 				cur.activeMap = sm.getActiveOnMap(first.GetTime(), last.GetTime(), s)
-				cur.hash = m.serviceHash(cur.activeMap, first, last, s)
+				cur.hash = m.serviceHash(cur.activeMap, first, last)
 
 				rets[j][s] = cur
 			}
@@ -177,7 +178,7 @@ func (m ServiceDuplicateRemover) getServiceChunks(feed *gtfsparser.Feed, amaps m
 	return chunks
 }
 
-func (m ServiceDuplicateRemover) serviceHash(active []bool, first gtfs.Date, last gtfs.Date, s *gtfs.Service) uint32 {
+func (m ServiceDuplicateRemover) serviceHash(active []bool, first gtfs.Date, last gtfs.Date) uint32 {
 	h := fnv.New32a()
 
 	bls := boolsToBytes(active)

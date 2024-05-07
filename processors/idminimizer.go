@@ -8,10 +8,11 @@ package processors
 
 import (
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"os"
 	"strconv"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // IDMinimizer minimizes IDs by replacing them be continuous integer
@@ -246,14 +247,14 @@ func (minimizer IDMinimizer) minimizeStopIds(feed *gtfsparser.Feed) {
 func (minimizer IDMinimizer) minimizeAttributionIds(feed *gtfsparser.Feed) {
 	var idCount int64 = 1
 
-	for i, _ := range feed.Attributions {
+	for i := range feed.Attributions {
 		newId := minimizer.Prefix + strconv.FormatInt(idCount, minimizer.Base)
 		feed.Attributions[i].Id = newId
 		idCount = idCount + 1
 	}
 
 	for _, ag := range feed.Agencies {
-		for i, _ := range ag.Attributions {
+		for i := range ag.Attributions {
 			newId := minimizer.Prefix + strconv.FormatInt(idCount, minimizer.Base)
 			ag.Attributions[i].Id = newId
 			idCount = idCount + 1
@@ -261,7 +262,7 @@ func (minimizer IDMinimizer) minimizeAttributionIds(feed *gtfsparser.Feed) {
 	}
 
 	for _, r := range feed.Routes {
-		for i, _ := range r.Attributions {
+		for i := range r.Attributions {
 			newId := minimizer.Prefix + strconv.FormatInt(idCount, minimizer.Base)
 			r.Attributions[i].Id = newId
 			idCount = idCount + 1
@@ -272,7 +273,7 @@ func (minimizer IDMinimizer) minimizeAttributionIds(feed *gtfsparser.Feed) {
 		if t.Attributions == nil {
 			continue
 		}
-		for i, _ := range *t.Attributions {
+		for i := range *t.Attributions {
 			newId := minimizer.Prefix + strconv.FormatInt(idCount, minimizer.Base)
 			(*t.Attributions)[i].Id = newId
 			idCount = idCount + 1

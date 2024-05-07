@@ -9,14 +9,15 @@ package processors
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"hash/fnv"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 	"unsafe"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // TripDuplicateRemover merges semantically equivalent routes
@@ -188,9 +189,7 @@ func (m *TripDuplicateRemover) combineAdjTrips(feed *gtfsparser.Feed, ref *gtfs.
 				sl := make([]*gtfs.Attribution, 0)
 				ref.Attributions = &sl
 			}
-			for _, attr := range *t.Attributions {
-				*ref.Attributions = append(*ref.Attributions, attr)
-			}
+			*ref.Attributions = append(*ref.Attributions, *t.Attributions...)
 		}
 
 		for fld, v := range feed.TripsAddFlds {
@@ -227,9 +226,7 @@ func (m *TripDuplicateRemover) combineContTrips(feed *gtfsparser.Feed, ref *gtfs
 				sl := make([]*gtfs.Attribution, 0)
 				ref.Attributions = &sl
 			}
-			for _, attr := range *t.Attributions {
-				*ref.Attributions = append(*ref.Attributions, attr)
-			}
+			*ref.Attributions = append(*ref.Attributions, *t.Attributions...)
 		}
 
 		feed.DeleteTrip(t.Id)
@@ -249,9 +246,7 @@ func (m *TripDuplicateRemover) combineEqTrips(feed *gtfsparser.Feed, ref *gtfs.T
 				sl := make([]*gtfs.Attribution, 0)
 				ref.Attributions = &sl
 			}
-			for _, attr := range *t.Attributions {
-				*ref.Attributions = append(*ref.Attributions, attr)
-			}
+			*ref.Attributions = append(*ref.Attributions, *t.Attributions...)
 		}
 
 		if ref.Bikes_allowed == 0 && t.Bikes_allowed > 0 {
@@ -565,9 +560,7 @@ func (m *TripDuplicateRemover) getTripChunks(feed *gtfsparser.Feed) [][][]*gtfs.
 	for hash := range trips {
 		chunks[curchunk] = append(chunks[curchunk], make([]*gtfs.Trip, 0))
 
-		for _, t := range trips[hash] {
-			chunks[curchunk][len(chunks[curchunk])-1] = append(chunks[curchunk][len(chunks[curchunk])-1], t)
-		}
+		chunks[curchunk][len(chunks[curchunk])-1] = append(chunks[curchunk][len(chunks[curchunk])-1], trips[hash]...)
 
 		if len(chunks[curchunk]) == chunksize {
 			curchunk++

@@ -7,8 +7,9 @@
 package processors
 
 import (
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
+
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // ShapeIdx stores objects for fast nearest-neighbor
@@ -137,7 +138,7 @@ func (gi *ShapeIdx) isects(x0, y0, x1, y1 float64, x, y uint) bool {
 	ocode1 := gi.ocode(x1, y1, xmin, ymin, xmax, ymax)
 	isect := false
 
-	for true {
+	for {
 		if (ocode0 | ocode1) == 0 {
 			return true
 		} else if (ocode0 & ocode1) != 0 {

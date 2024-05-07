@@ -8,10 +8,11 @@ package processors
 
 import (
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"hash/fnv"
 	"os"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // AgencyDuplicateRemover merges semantically equivalent routes
@@ -116,9 +117,7 @@ func (adr *AgencyDuplicateRemover) combineAgencies(feed *gtfsparser.Feed, agenci
 			}
 		}
 
-		for _, attr := range a.Attributions {
-			ref.Attributions = append(ref.Attributions, attr)
-		}
+		ref.Attributions = append(ref.Attributions, a.Attributions...)
 
 		for _, fa := range fareattrs[a] {
 			if fa.Agency == a {

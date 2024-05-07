@@ -9,11 +9,12 @@ package processors
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"hash/fnv"
 	"os"
 	"unsafe"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // RouteDuplicateRemover merges semantically equivalent routes
@@ -187,9 +188,7 @@ func (rdr RouteDuplicateRemover) combineRoutes(feed *gtfsparser.Feed, routes []*
 			}
 		}
 
-		for _, attr := range r.Attributions {
-			ref.Attributions = append(ref.Attributions, attr)
-		}
+		ref.Attributions = append(ref.Attributions, r.Attributions...)
 
 		// delete every fare rule that contains this route
 		for _, fa := range feed.FareAttributes {
