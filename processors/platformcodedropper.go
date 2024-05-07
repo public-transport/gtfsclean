@@ -8,7 +8,7 @@ package processors
 
 import (
 	"fmt"
-	"github.com/patrickbr/gtfsparser"
+	"github.com/public-transport/gtfsparser"
 	"os"
 )
 

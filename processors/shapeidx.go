@@ -7,7 +7,7 @@
 package processors
 
 import (
-	gtfs "github.com/patrickbr/gtfsparser/gtfs"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
 )
 

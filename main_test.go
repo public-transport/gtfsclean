@@ -7,9 +7,9 @@
 package main
 
 import (
-	"github.com/patrickbr/gtfsparser"
-	"github.com/patrickbr/gtfstidy/processors"
-	"github.com/patrickbr/gtfswriter"
+	"github.com/public-transport/gtfsparser"
+	"github.com/public-transport/gtfsclean/processors"
+	"github.com/public-transport/gtfswriter"
 	"os"
 	"path"
 	"testing"

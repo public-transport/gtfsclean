@@ -7,7 +7,7 @@
 package processors
 
 import (
-	"github.com/patrickbr/gtfsparser"
+	"github.com/public-transport/gtfsparser"
 	"testing"
 )
 

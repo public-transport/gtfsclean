@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/patrickbr/gtfstidy)](https://goreportcard.com/report/github.com/patrickbr/gtfstidy) [![Build Status](https://travis-ci.org/patrickbr/gtfstidy.svg?branch=master)](https://travis-ci.org/patrickbr/gtfstidy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/public-transport/gtfsclean)](https://goreportcard.com/report/github.com/public-transport/gtfsclean) [![Build Status](https://travis-ci.org/patrickbr/gtfstidy.svg?branch=master)](https://travis-ci.org/patrickbr/gtfstidy)
 
 # gtfstidy
 
@@ -26,7 +26,7 @@ Output feeds are **semantically equivalent** to the input feed. In this context,
 For more features, see the help page (`--help`).
 
 ## 1. Installation
-    $ go get github.com/patrickbr/gtfstidy
+    $ go get github.com/public-transport/gtfsclean
 
 ## 2. Usage
 Each GTFS processor has to be enabled explicitly. See

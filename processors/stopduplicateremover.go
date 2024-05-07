@@ -9,8 +9,8 @@ package processors
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/patrickbr/gtfsparser"
-	gtfs "github.com/patrickbr/gtfsparser/gtfs"
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"hash/fnv"
 	"os"
 	"unsafe"

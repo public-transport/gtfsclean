@@ -9,8 +9,8 @@ package processors
 import (
 	"container/heap"
 	"fmt"
-	"github.com/patrickbr/gtfsparser"
-	gtfs "github.com/patrickbr/gtfsparser/gtfs"
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
 	"os"
 	"regexp"
