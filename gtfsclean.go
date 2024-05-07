@@ -9,17 +9,18 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	"github.com/public-transport/gtfsparser/gtfs"
-	"github.com/public-transport/gtfsclean/processors"
-	"github.com/public-transport/gtfswriter"
-	"github.com/paulmach/go.geojson"
-	flag "github.com/spf13/pflag"
 	"io/ioutil"
 	"os"
 	"path"
 	"strconv"
 	"strings"
+
+	geojson "github.com/paulmach/go.geojson"
+	"github.com/public-transport/gtfsclean/processors"
+	"github.com/public-transport/gtfsparser"
+	"github.com/public-transport/gtfsparser/gtfs"
+	"github.com/public-transport/gtfswriter"
+	flag "github.com/spf13/pflag"
 )
 
 func getGtfsPoly(poly [][][]float64) gtfsparser.Polygon {
@@ -101,7 +102,7 @@ func parseCoords(s string) ([][2]float64, error) {
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "gtfstidy - (C) 2016-2023 by Patrick Brosi <info@patrickbrosi.de>\n\nUsage:\n\n  %s [<options>] [-o <outputfile>] <input GTFS>\n\nAllowed options:\n\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "gtfstidy - (C) 2016-2023 by Patrick Brosi <info@patrickbrosi.de>\ngtfsclean - (C) by Transitous Team\nUsage:\n\n  %s [<options>] [-o <outputfile>] <input GTFS>\n\nAllowed options:\n\n", os.Args[0])
 		flag.PrintDefaults()
 	}
 
@@ -522,7 +523,7 @@ func main() {
 	if e != nil {
 		fmt.Fprintf(os.Stderr, "\nError while parsing GTFS feed:\n")
 		fmt.Fprintln(os.Stderr, e.Error())
-		fmt.Fprintln(os.Stdout, "\nYou may want to try running gtfstidy with --fix for error fixing / skipping. See --help for details.")
+		fmt.Fprintln(os.Stdout, "\nYou may want to try running gtfsclean with --fix for error fixing / skipping. See --help for details.")
 		os.Exit(1)
 	} else {
 		minzers := make([]processors.Processor, 0)

@@ -6,7 +6,7 @@
 
 SRC = $(shell find . -type f -iname '*.go')
 
-TARGET := gtfstidy
+TARGET := gtfsclean
 
 all: lint vet test build
 

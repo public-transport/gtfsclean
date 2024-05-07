@@ -1,6 +1,6 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/public-transport/gtfsclean)](https://goreportcard.com/report/github.com/public-transport/gtfsclean) [![Build Status](https://travis-ci.org/patrickbr/gtfstidy.svg?branch=master)](https://travis-ci.org/patrickbr/gtfstidy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/public-transport/gtfsclean)](https://goreportcard.com/report/github.com/public-transport/gtfsclean)
 
-# gtfstidy
+# gtfsclean
 
 Tidy (and validate) [GTFS](https://developers.google.com/transit/gtfs/) feeds.
 
@@ -31,13 +31,13 @@ For more features, see the help page (`--help`).
 ## 2. Usage
 Each GTFS processor has to be enabled explicitly. See
 
-    $ gtfstidy --help
+    $ gtfsclean --help
 
 for possible options.
 
 You can use
 
-	$ gtfstidy -v <feed>
+	$ gtfsclean -v <feed>
 
 to do a simple feed validation.
 
@@ -45,11 +45,11 @@ to do a simple feed validation.
 
 Process the SFMTA-Feed with all processors enabled:
 
-    $ gtfstidy -SCRmTcdsOeD sanfrancisco.zip
+    $ gtfsclean -SCRmTcdsOeD sanfrancisco.zip
 
 Validate the SFMTA-Feed:
 
-    $ gtfstidy -v sanfrancisco.zip
+    $ gtfsclean -v sanfrancisco.zip
 
 ## 4. Evaluation
 

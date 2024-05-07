@@ -7,15 +7,16 @@
 package main
 
 import (
-	"github.com/public-transport/gtfsparser"
-	"github.com/public-transport/gtfsclean/processors"
-	"github.com/public-transport/gtfswriter"
 	"os"
 	"path"
 	"testing"
+
+	"github.com/public-transport/gtfsclean/processors"
+	"github.com/public-transport/gtfsparser"
+	"github.com/public-transport/gtfswriter"
 )
 
-func TestGtfsTidy(t *testing.T) {
+func TestGtfsClean(t *testing.T) {
 	feed := gtfsparser.NewFeed()
 
 	opts := gtfsparser.ParseOptions{UseDefValueOnError: false, DropErroneous: false, DryRun: false, CheckNullCoordinates: false, EmptyStringRepl: "", ZipFix: false}
