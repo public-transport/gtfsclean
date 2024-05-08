@@ -9,8 +9,6 @@ package processors
 import (
 	"container/heap"
 	"fmt"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
 	"os"
 	"regexp"
@@ -18,6 +16,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/public-transport/gtfsparser"
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 // A StopCluster contains stops in .Childs which are grouped by stops in
@@ -311,9 +312,9 @@ func (m *StopReclusterer) createParent(stops []*gtfs.Stop, feed *gtfsparser.Feed
 			ret.Url = nil
 		}
 
-		if ret.Timezone.String() == "" && st.Timezone.String() != "" {
+		if ret.Timezone.String() == "UTC" && st.Timezone.String() != "UTC" {
 			ret.Timezone = st.Timezone
-		} else if ret.Timezone.String() != "" && st.Timezone.String() != ret.Timezone.String() {
+		} else if ret.Timezone.String() != "UTC" && st.Timezone.String() != ret.Timezone.String() {
 			ret.Timezone, _ = time.LoadLocation("")
 		}
 	}
