@@ -27,6 +27,14 @@ For more features, see the help page (`--help`).
 
 ## 1. Installation
     $ go install github.com/public-transport/gtfsclean@latest
+Then you need you need to check where it has been installed by running
+
+    $ go env GOPATH
+and ensure that your terminal's path contains the GOPATH.
+If everything is set up correctly then running
+
+    $ gtfsclean --help
+should yield a help message with all of the various cmdline flags.
 
 ## 2. Usage
 Each GTFS processor has to be enabled explicitly. See
