@@ -296,7 +296,7 @@ func (sdr StopDuplicateRemover) stopHash(s *gtfs.Stop) uint32 {
 
 	h.Write([]byte(s.Desc))
 	h.Write([]byte(s.Zone_id))
-	h.Write([]byte(s.Timezone.GetTzString()))
+	h.Write([]byte(s.Timezone.String()))
 
 	if !sdr.Fuzzy {
 		h.Write([]byte(s.Platform_code))

@@ -17,6 +17,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // A StopCluster contains stops in .Childs which are grouped by stops in
@@ -291,7 +292,7 @@ func (m *StopReclusterer) createParent(stops []*gtfs.Stop, feed *gtfsparser.Feed
 
 	ret := &gtfs.Stop{}
 	ret.Wheelchair_boarding = 0
-	ret.Timezone, _ = gtfs.NewTimezone("")
+	ret.Timezone, _ = time.LoadLocation("")
 	ret.Url = nil
 
 	for _, st := range stops {
@@ -310,10 +311,10 @@ func (m *StopReclusterer) createParent(stops []*gtfs.Stop, feed *gtfsparser.Feed
 			ret.Url = nil
 		}
 
-		if ret.Timezone.GetTzString() == "" && st.Timezone.GetTzString() != "" {
+		if ret.Timezone.String() == "" && st.Timezone.String() != "" {
 			ret.Timezone = st.Timezone
-		} else if ret.Timezone.GetTzString() != "" && st.Timezone.GetTzString() != ret.Timezone.GetTzString() {
-			ret.Timezone, _ = gtfs.NewTimezone("")
+		} else if ret.Timezone.String() != "" && st.Timezone.String() != ret.Timezone.String() {
+			ret.Timezone, _ = time.LoadLocation("")
 		}
 	}
 
