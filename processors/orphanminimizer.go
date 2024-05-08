@@ -200,7 +200,7 @@ func (or OrphanRemover) removeTripOrphans(feed *gtfsparser.Feed) {
 			if st.Drop_off_type() != 1 || st.Continuous_drop_off() != 1 || s.Route.Continuous_drop_off != 1 {
 				hasDropOff = true
 			}
-			if st.Pickup_type() != 1  || st.Continuous_pickup() != 1 || s.Route.Continuous_pickup != 1 {
+			if st.Pickup_type() != 1 || st.Continuous_pickup() != 1 || s.Route.Continuous_pickup != 1 {
 				hasPickUp = true
 			}
 			if hasDropOff && hasPickUp {

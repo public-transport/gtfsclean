@@ -27,7 +27,7 @@ type DayType struct {
 // on which *excactly* the same trips are served. Similary day types are than aggreated,
 // and outfitted with an ID "<Weekday> (WW<list of calendar weeks served)".
 type ServiceNonOverlapper struct {
-	DayNames []string
+	DayNames     []string
 	YearWeekName string
 }
 

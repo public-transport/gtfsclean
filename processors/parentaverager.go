@@ -18,7 +18,7 @@ import (
 // and checks whether moving them to the centroid of
 // all childs fixes this. If not, nothing is changed!
 type StopParentAverager struct {
-	MaxDist   float64
+	MaxDist float64
 }
 
 // Run this StopParentEnforcer on some feed
@@ -57,16 +57,16 @@ func (sdr StopParentAverager) Run(feed *gtfsparser.Feed) {
 
 			for _, c := range childs {
 				if haversineApprox(float64(c.Lat), float64(c.Lon), float64(avgLat), float64(avgLon)) >= sdr.MaxDist {
-					 allOkay= false
+					allOkay = false
 				}
 			}
 
 			if allOkay {
 				p.Lat = float32(avgLat)
 				p.Lon = float32(avgLon)
-				fixed +=1;
+				fixed += 1
 			} else {
-				remain +=1;
+				remain += 1
 			}
 		}
 	}
