@@ -13,6 +13,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	_ "time/tzdata"
 
 	geojson "github.com/paulmach/go.geojson"
 	"github.com/public-transport/gtfsclean/processors"
