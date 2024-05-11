@@ -7,8 +7,9 @@
 package processors
 
 import (
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"math"
+
+	gtfs "github.com/public-transport/gtfsparser/gtfs"
 )
 
 var DEG_TO_RAD float64 = 0.017453292519943295769236907684886127134428718885417254560
@@ -65,11 +66,6 @@ func dist(x1 float64, y1 float64, x2 float64, y2 float64) float64 {
 
 // Calculate the distance between two ShapePoints
 func distP(a *gtfs.ShapePoint, b *gtfs.ShapePoint) float64 {
-	return haversine(float64(a.Lat), float64(a.Lon), float64(b.Lat), float64(b.Lon))
-}
-
-// Distance between two stops
-func distS(a *gtfs.Stop, b *gtfs.Stop) float64 {
 	return haversine(float64(a.Lat), float64(a.Lon), float64(b.Lat), float64(b.Lon))
 }
 

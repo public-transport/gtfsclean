@@ -256,24 +256,12 @@ func (sm ServiceMinimizer) getNextDate(d gtfs.Date) gtfs.Date {
 	return d.GetOffsettedDate(1)
 }
 
-func (sm ServiceMinimizer) getPrevDate(d gtfs.Date) gtfs.Date {
-	return d.GetOffsettedDate(-1)
-}
-
 func (sm ServiceMinimizer) getNextDateTime(t time.Time) time.Time {
 	return t.AddDate(0, 0, 1)
 }
 
 func (sm ServiceMinimizer) getPrevDateTime(t time.Time) time.Time {
 	return t.AddDate(0, 0, -1)
-}
-
-func (sm ServiceMinimizer) getNextDateTimeWeek(t time.Time) time.Time {
-	return t.AddDate(0, 0, 7-int(t.Weekday()))
-}
-
-func (sm ServiceMinimizer) getPrevDateTimeWeek(t time.Time) time.Time {
-	return t.AddDate(0, 0, -(7 - int(t.Weekday())))
 }
 
 func (sm ServiceMinimizer) countServices(feed *gtfsparser.Feed) (int, int) {
