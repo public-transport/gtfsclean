@@ -129,6 +129,7 @@ func main() {
 	useDefaultValuesOnError := flag.BoolP("default-on-errs", "e", false, "if non-required fields have errors, fall back to the default values")
 	fixZip := flag.BoolP("fix-zip", "z", false, "try to fix some errors in the ZIP file directory hierarchy")
 	emptyStrRepl := flag.StringP("empty-str-repl", "p", "", "string to use if a non-critical required string field is empty (like stop_name, agency_name, ...)")
+	emptyAgencyUrlRepl := flag.StringP("empty-agency-url-repl", "", "", "url to use if agency_url is empty")
 	dropErroneousEntities := flag.BoolP("drop-errs", "D", false, "drop erroneous entries from feed")
 	checkNullCoords := flag.BoolP("check-null-coords", "n", false, "check for (0, 0) coordinates")
 
@@ -413,6 +414,9 @@ func main() {
 	opts.UseDefValueOnError = *useDefaultValuesOnError && !*onlyValidate
 	opts.CheckNullCoordinates = *checkNullCoords
 	opts.EmptyStringRepl = *emptyStrRepl
+	if *emptyAgencyUrlRepl != "" {
+		opts.EmptyAgencyUrlRepl = *emptyAgencyUrlRepl
+	}
 	opts.ZipFix = *fixZip
 	opts.ShowWarnings = *showWarnings
 	opts.DropShapes = *dropShapes
