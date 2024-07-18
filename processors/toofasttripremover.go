@@ -77,7 +77,7 @@ func (f TooFastTripRemover) Run(feed *gtfsparser.Feed) {
 					feed.DeleteTrip(id)
 					break
 				}
-				if gtfs.GetTypeFromExtended(t.Route.Type) == 11 && speed > 50 {
+				if gtfs.GetTypeFromExtended(t.Route.Type) == 11 && speed > 100 {
 					feed.DeleteTrip(id)
 					break
 				}
