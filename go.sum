@@ -2,8 +2,8 @@ github.com/klauspost/compress v1.17.9 h1:6KIumPrER1LHsvBVuDa0r5xaG0Es51mhhB9BQB2
 github.com/klauspost/compress v1.17.9/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/paulmach/go.geojson v1.5.0 h1:7mhpMK89SQdHFcEGomT7/LuJhwhEgfmpWYVlVmLEdQw=
 github.com/paulmach/go.geojson v1.5.0/go.mod h1:DgdUy2rRVDDVgKqrjMe2vZAHMfhDTrjVKt3LmHIXGbU=
-github.com/public-transport/gtfsparser v0.0.0-20240710174704-2714e8eacded h1:s3xyqN+KDjRXrzFzZMwjFSr+bJAfbiIobque7DTgSw8=
-github.com/public-transport/gtfsparser v0.0.0-20240710174704-2714e8eacded/go.mod h1:VMH9/q8veNNZb7LLSQwLBLaQaab79LtyU6kx3P+b48Q=
+github.com/public-transport/gtfsparser v0.0.0-20240721104547-10f5dde8d70c h1:23FheDIeNSsp/f1Q4dXEvu3MkIMFERB4BjwvaM4Ij6w=
+github.com/public-transport/gtfsparser v0.0.0-20240721104547-10f5dde8d70c/go.mod h1:VMH9/q8veNNZb7LLSQwLBLaQaab79LtyU6kx3P+b48Q=
 github.com/public-transport/gtfswriter v0.0.0-20240530234004-bf8f5e60799e h1:C41PXKjBVvWn4hc9nKNx8atCmbgzthpKvoGdli4TN78=
 github.com/public-transport/gtfswriter v0.0.0-20240530234004-bf8f5e60799e/go.mod h1:pZBUjxz/q7rW+05aZnrJyW/sLwgYGIO7c1yGkPivNTU=
 github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
@@ -12,5 +12,5 @@ github.com/twotwotwo/sorts v0.0.0-20160814051341-bf5c1f2b8553 h1:DRC1ubdb3ZmyyIe
 github.com/twotwotwo/sorts v0.0.0-20160814051341-bf5c1f2b8553/go.mod h1:Rj7Csq/tZ/egz+Ltc2IVpsA5309AmSMEswjkTZmq2Xc=
 github.com/valyala/fastjson v1.6.4 h1:uAUNq9Z6ymTgGhcm0UynUAB6tlbakBrz6CQFax3BXVQ=
 github.com/valyala/fastjson v1.6.4/go.mod h1:CLCAqky6SMuOcxStkYQvblddUtoRxhYMGLrsQns1aXY=
-golang.org/x/exp v0.0.0-20240707233637-46b078467d37 h1:uLDX+AfeFCct3a2C7uIWBKMJIR3CJMhcgfrUAqjRK6w=
-golang.org/x/exp v0.0.0-20240707233637-46b078467d37/go.mod h1:M4RDyNAINzryxdtnbRXRL/OHtkFuWGRjvuhBJpk2IlY=
+golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 h1:2dVuKD2vS7b0QIHQbpyTISPd0LeHDbnYEryqj5Q1ug8=
+golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56/go.mod h1:M4RDyNAINzryxdtnbRXRL/OHtkFuWGRjvuhBJpk2IlY=

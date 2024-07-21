@@ -4,13 +4,13 @@ go 1.20
 
 require (
 	github.com/paulmach/go.geojson v1.5.0
-	github.com/public-transport/gtfsparser v0.0.0-20240710174704-2714e8eacded
+	github.com/public-transport/gtfsparser v0.0.0-20240721104547-10f5dde8d70c
 	github.com/public-transport/gtfswriter v0.0.0-20240530234004-bf8f5e60799e
 	github.com/spf13/pflag v1.0.5
 
 	// Remove this once our minimum Go version is forced to be 1.21
 	// This is only used for slices which are added in 1.21 stdlib
-	golang.org/x/exp v0.0.0-20240707233637-46b078467d37
+	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
 )
 
 require (
