@@ -9,12 +9,12 @@ package processors
 import (
 	"fmt"
 	"os"
+	"slices"
 	"sort"
 	"strconv"
 
 	"github.com/public-transport/gtfsparser"
 	gtfs "github.com/public-transport/gtfsparser/gtfs"
-	"golang.org/x/exp/slices"
 )
 
 type DayType struct {
