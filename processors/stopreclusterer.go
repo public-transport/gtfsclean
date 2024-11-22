@@ -15,7 +15,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/public-transport/gtfsparser"
 	gtfs "github.com/public-transport/gtfsparser/gtfs"
@@ -293,7 +292,7 @@ func (m *StopReclusterer) createParent(stops []*gtfs.Stop, feed *gtfsparser.Feed
 
 	ret := &gtfs.Stop{}
 	ret.Wheelchair_boarding = 0
-	ret.Timezone, _ = time.LoadLocation("")
+	ret.Timezone = nil
 	ret.Url = nil
 
 	for _, st := range stops {
@@ -312,10 +311,10 @@ func (m *StopReclusterer) createParent(stops []*gtfs.Stop, feed *gtfsparser.Feed
 			ret.Url = nil
 		}
 
-		if ret.Timezone.String() == "UTC" && st.Timezone.String() != "UTC" {
+		if ret.Timezone == nil && st.Timezone != nil {
 			ret.Timezone = st.Timezone
-		} else if ret.Timezone.String() != "UTC" && st.Timezone.String() != ret.Timezone.String() {
-			ret.Timezone, _ = time.LoadLocation("")
+		} else if ret.Timezone != nil && st.Timezone.String() != ret.Timezone.String() {
+			ret.Timezone = nil
 		}
 	}
 
