@@ -2,8 +2,8 @@ github.com/klauspost/compress v1.17.11 h1:In6xLpyWOi1+C7tXUUWv2ot1QvBjxevKAaI6IX
 github.com/klauspost/compress v1.17.11/go.mod h1:pMDklpSncoRMuLFrf1W9Ss9KT+0rH90U12bZKk7uwG0=
 github.com/paulmach/go.geojson v1.5.0 h1:7mhpMK89SQdHFcEGomT7/LuJhwhEgfmpWYVlVmLEdQw=
 github.com/paulmach/go.geojson v1.5.0/go.mod h1:DgdUy2rRVDDVgKqrjMe2vZAHMfhDTrjVKt3LmHIXGbU=
-github.com/public-transport/gtfsparser v0.0.0-20241122031259-a584e67c4aff h1:Nl0ZlDwCnw8UB/6C8V1xXC8CPO4h0/1zLKoUkfAxeAM=
-github.com/public-transport/gtfsparser v0.0.0-20241122031259-a584e67c4aff/go.mod h1:KGGaYsSErOciEFCbJ1QfGna1umXl+PPcdLxw7y5QlR0=
+github.com/public-transport/gtfsparser v0.0.0-20250102005256-fb4cf4137699 h1:8wkhUKm/ksRBjaYQlqKLU2QVA9wFolXaOlzB0vj8Ygc=
+github.com/public-transport/gtfsparser v0.0.0-20250102005256-fb4cf4137699/go.mod h1:KGGaYsSErOciEFCbJ1QfGna1umXl+PPcdLxw7y5QlR0=
 github.com/public-transport/gtfswriter v0.0.0-20241121234751-b13c421afb44 h1:6OWh2m8kFAWqRSVhK3saYkFrk7foM66LfmUCOb3Sjcw=
 github.com/public-transport/gtfswriter v0.0.0-20241121234751-b13c421afb44/go.mod h1:KSqVchvRPy5cHm1AH/GhL0qAAPxdIUlGmfkD/MJLIT8=
 github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
