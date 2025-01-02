@@ -129,7 +129,8 @@ func main() {
 	useDefaultValuesOnError := flag.BoolP("default-on-errs", "e", false, "if non-required fields have errors, fall back to the default values")
 	fixZip := flag.BoolP("fix-zip", "z", false, "try to fix some errors in the ZIP file directory hierarchy")
 	emptyStrRepl := flag.StringP("empty-str-repl", "p", "", "string to use if a non-critical required string field is empty (like stop_name, agency_name, ...)")
-	emptyAgencyUrlRepl := flag.StringP("empty-agency-url-repl", "", "", "url to use if agency_url is empty")
+	emptyAgencyUrlRepl := flag.String("empty-agency-url-repl", "", "url to use if agency_url is empty")
+	removeAgencyNames := flag.StringSlice("drop-agency-names", []string{}, "names of agencies to remove")
 	dropErroneousEntities := flag.BoolP("drop-errs", "D", false, "drop erroneous entries from feed")
 	checkNullCoords := flag.BoolP("check-null-coords", "n", false, "check for (0, 0) coordinates")
 
@@ -535,6 +536,10 @@ func main() {
 		os.Exit(1)
 	} else {
 		minzers := make([]processors.Processor, 0)
+
+		if removeAgencyNames != nil && len(*removeAgencyNames) > 0 {
+			minzers = append(minzers, processors.AgencyFilter{NamesToRemove: *removeAgencyNames})
+		}
 
 		if *dropTooFast {
 			minzers = append(minzers, processors.TooFastTripRemover{})
