@@ -34,7 +34,12 @@ func (f TooFastTripRemover) Run(feed *gtfsparser.Feed) {
 		for i := 1; i < len(t.StopTimes); i++ {
 			dist += distSApprox(t.StopTimes[i-1].Stop(), t.StopTimes[i].Stop())
 
+			if t.StopTimes[i].Arrival_time().Empty() || last.Departure_time().Empty() {
+				continue
+			}
+
 			inter := t.StopTimes[i].Arrival_time().SecondsSinceMidnight() - last.Departure_time().SecondsSinceMidnight()
+
 
 			speed := 0.0
 
@@ -103,6 +108,10 @@ func (f TooFastTripRemover) Run(feed *gtfsparser.Feed) {
 			dist := 0.0
 			for i := j + 1; i < len(t.StopTimes); i++ {
 				dist += distSApprox(t.StopTimes[i-1].Stop(), t.StopTimes[i].Stop())
+
+				if t.StopTimes[i].Arrival_time().Empty() || t.StopTimes[j].Departure_time().Empty() {
+					continue
+				}
 
 				inter := t.StopTimes[i].Arrival_time().SecondsSinceMidnight() - t.StopTimes[j].Departure_time().SecondsSinceMidnight()
 
