@@ -2,7 +2,7 @@
 
 # gtfsclean
 
-Tidy (and validate) [GTFS](https://developers.google.com/transit/gtfs/) feeds.
+Tidy (and validate) [GTFS](https://gtfs.org/) feeds.
 
 Fixes small inconsistencies, minimizes the overall feed size, and prepares the feed for secure, standard-compliant further use.
 
