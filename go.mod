@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/paulmach/go.geojson v1.5.0
-	github.com/public-transport/gtfsparser v0.0.0-20250109140348-38dc4068f18d
+	github.com/public-transport/gtfsparser v0.0.0-20250301222212-de4dc4faa0af
 	github.com/public-transport/gtfswriter v0.0.0-20250109141303-0bbc5ae2d194
 	github.com/spf13/pflag v1.0.5
 )
