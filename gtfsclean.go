@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"regexp"
 	"strconv"
 	"strings"
 	_ "time/tzdata"
@@ -196,6 +197,8 @@ func main() {
 	useGoogleSupportedRouteTypes := flag.BoolP("google-supported-route-types", "", false, "Only use (extended) route types supported by Google")
 	motFilterStr := flag.StringP("keep-mots", "M", "", "comma-separated list of MOTs to keep, empty filter (default) keeps all")
 	motFilterNegStr := flag.StringP("drop-mots", "N", "", "comma-separated list of MOTs to drop")
+	copyTripNamesRegex := flag.String("copy-trip-names-matching", "", "Regular expression to match trip_short_names that should be copied to route_short_name")
+	keepRouteNamesRegex := flag.String("keep-route-names-matching", "", "Regular expression to match route names that should not be replaced even when matching the regular expression from --copy-trip-names-matching")
 	help := flag.BoolP("help", "?", false, "this message")
 
 	flag.Parse()
@@ -540,6 +543,27 @@ func main() {
 
 		if removeAgencyNames != nil && len(*removeAgencyNames) > 0 {
 			minzers = append(minzers, processors.AgencyFilter{NamesToRemove: *removeAgencyNames})
+		}
+
+		if copyTripNamesRegex != nil && len(*copyTripNamesRegex) > 0 {
+			copyRe, err := regexp.Compile(*copyTripNamesRegex)
+			if err != nil {
+				fmt.Println("Argument passed to --copy-trip-names-matching could not be parsed as a regular expression")
+				os.Exit(1)
+			}
+
+			var keepRe *regexp.Regexp = nil
+			if keepRouteNamesRegex != nil && *keepRouteNamesRegex != "" {
+				keepRe, err = regexp.Compile(*keepRouteNamesRegex)
+				if err != nil {
+					fmt.Println("Argument passed to --keep-trip-names-matching could not be parsed as a regular expression")
+					os.Exit(1)
+				}
+			}
+
+			minzers = append(minzers, processors.RouteNameConverter{
+				KeepRouteNameRegex: keepRe,
+				CopyTripNameRegex:  copyRe})
 		}
 
 		if *dropTooFast {
