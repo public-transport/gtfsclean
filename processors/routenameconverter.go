@@ -18,30 +18,54 @@ import (
 type RouteNameConverter struct {
 	KeepRouteNameRegex *regexp.Regexp
 	CopyTripNameRegex  *regexp.Regexp
+	MoveHeadsignRegex  *regexp.Regexp
 }
 
 func (f RouteNameConverter) Run(feed *gtfsparser.Feed) {
-	fmt.Fprintf(os.Stdout, "Copying selected trip names to route names...")
+	fmt.Fprintf(os.Stdout, "Copying selected trip names and headsigns to route names...")
 
 	for _, trip := range feed.Trips {
 		route := trip.Route
 		if route == nil {
 			continue
 		}
-		if route.Short_name != "" && f.KeepRouteNameRegex != nil && f.KeepRouteNameRegex.MatchString(route.Short_name) {
+		if route.Short_name != "" &&
+			f.KeepRouteNameRegex != nil &&
+			f.KeepRouteNameRegex.MatchString(route.Short_name) {
 			continue
 		} else {
-			if trip.Short_name != nil && *trip.Short_name != "" && f.CopyTripNameRegex != nil && f.CopyTripNameRegex.MatchString(*trip.Short_name) {
+			newName := ""
+
+			if trip.Short_name != nil &&
+				*trip.Short_name != "" &&
+				f.CopyTripNameRegex != nil &&
+				f.CopyTripNameRegex.MatchString(*trip.Short_name) {
+				newName = *trip.Short_name
+			}
+
+			if trip.Headsign != nil &&
+				*trip.Headsign != "" &&
+				f.MoveHeadsignRegex != nil &&
+				f.MoveHeadsignRegex.MatchString(*trip.Headsign) {
+				newName = *trip.Headsign
+
+				replacementHeadsign := ""
+				if len(trip.StopTimes) > 0 {
+					replacementHeadsign = trip.StopTimes[len(trip.StopTimes)-1].Stop().Name
+				}
+				trip.Headsign = &replacementHeadsign
+			}
+
+			if newName != "" {
 				newRouteId := route.Id + trip.Id
-				// todo copy
 				newRoute := (*route)
 				newRoute.Id = newRouteId
-				newRoute.Short_name = *trip.Short_name
+				newRoute.Short_name = newName
 				feed.Routes[newRouteId] = &newRoute
 				trip.Route = &newRoute
 			}
 		}
 	}
 
-	fmt.Fprintf(os.Stdout, " done.")
+	fmt.Fprintf(os.Stdout, " done.\n")
 }
