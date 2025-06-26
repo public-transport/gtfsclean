@@ -575,10 +575,12 @@ func main() {
 			}
 		}
 
-		minzers = append(minzers, processors.RouteNameConverter{
-			KeepRouteNameRegex: keepRouteNameRe,
-			CopyTripNameRegex:  copyTripNameRe,
-			MoveHeadsignRegex:  moveHeadsignRe})
+		if keepRouteNameRe != nil || copyTripNameRe != nil || moveHeadsignRe != nil {
+			minzers = append(minzers, processors.RouteNameConverter{
+				KeepRouteNameRegex: keepRouteNameRe,
+				CopyTripNameRegex:  copyTripNameRe,
+				MoveHeadsignRegex:  moveHeadsignRe})
+		}
 
 		if *dropTooFast {
 			minzers = append(minzers, processors.TooFastTripRemover{})
