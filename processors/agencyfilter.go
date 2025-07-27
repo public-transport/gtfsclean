@@ -9,53 +9,70 @@ package processors
 import (
 	"fmt"
 	"os"
-	"github.com/public-transport/gtfsparser"
-	gtfs "github.com/public-transport/gtfsparser/gtfs"
 	"slices"
+
+	"github.com/public-transport/gtfsparser"
 )
 
-// AgencyDuplicateRemover merges semantically equivalent routes
+// AgencyFilter removes agencies specified by command line arguments
 type AgencyFilter struct {
 	NamesToRemove []string
+	NamesToKeep   []string
 }
 
-// Run this AgencyDuplicateRemover on some feed
+// Run this AgencyFilter on some feed
 func (f AgencyFilter) Run(feed *gtfsparser.Feed) {
-	fmt.Fprintf(os.Stdout, "Removing filtered agencies... ")
-	agencies := []*gtfs.Agency{}
+	tripsBefore := len(feed.Trips)
+	agenciesBefore := len(feed.Agencies)
 
-	for agencyId := range feed.Agencies {
-		agency := feed.Agencies[agencyId]
-		if slices.Contains(f.NamesToRemove, agency.Name) {
-			agencies = append(agencies, agency)
+	removedAgencies, removedTrips := 0, 0
+	if len(f.NamesToKeep) > 0 {
+		removedAgencies, removedTrips = runKeepOnly(feed, f.NamesToKeep)
+	} else if len(f.NamesToRemove) > 0 {
+		removedAgencies, removedTrips = runRemove(feed, f.NamesToRemove)
+	}
 
+	fmt.Fprintf(os.Stdout, "done. (-%d agencies [-%.2f%%], %d trips [-%.2f%%])\n", removedAgencies, 100.0*float64(removedAgencies)/float64(agenciesBefore),
+		removedTrips, 100.0*float64(removedTrips)/float64(tripsBefore))
+}
+
+func runKeepOnly(feed *gtfsparser.Feed, namesToKeep []string) (int, int) {
+	fmt.Fprintf(os.Stdout, "Keeping only selected agencies... ")
+	removedAgencies := []string{}
+
+	for agencyId, agency := range feed.Agencies {
+		if !slices.Contains(namesToKeep, agency.Name) {
 			delete(feed.Agencies, agencyId)
+			removedAgencies = append(removedAgencies, agency.Id)
 		}
 	}
 
-	deletedRoutes := []*gtfs.Route{}
+	removedTrips := removeAgencyTrips(feed, removedAgencies)
+	return len(removedAgencies), removedTrips
+}
 
-	// Drop everything referencing the agency
-	for routeId := range feed.Routes {
-		route := feed.Routes[routeId]
-		if slices.Contains(agencies, route.Agency) {
-			delete(feed.Routes, routeId)
-			deletedRoutes = append(deletedRoutes, route)
+func runRemove(feed *gtfsparser.Feed, namesToRemove []string) (int, int) {
+	fmt.Fprintf(os.Stdout, "Removing selected agencies... ")
+	removedAgencies := []string{}
+
+	for agencyId, agency := range feed.Agencies {
+		if slices.Contains(namesToRemove, agency.Name) {
+			delete(feed.Agencies, agencyId)
+			removedAgencies = append(removedAgencies, agency.Id)
 		}
 	}
 
-	for trip := range feed.Trips {
-		if slices.Contains(deletedRoutes, feed.Trips[trip].Route) {
-			feed.DeleteTrip(trip)
+	removedTrips := removeAgencyTrips(feed, removedAgencies)
+	return len(removedAgencies), removedTrips
+}
+
+func removeAgencyTrips(feed *gtfsparser.Feed, removedAgencies []string) int {
+	removedTrips := 0
+	for tripId := range feed.Trips {
+		if slices.Contains(removedAgencies, feed.Trips[tripId].Route.Agency.Id) {
+			feed.DeleteTrip(tripId)
+			removedTrips += 1
 		}
 	}
-
-	for fareAttributes := range feed.FareAttributes {
-		attribute := feed.FareAttributes[fareAttributes]
-		if slices.Contains(agencies, attribute.Agency) {
-			delete(feed.FareAttributes, attribute.Id)
-		}
-	}
-
-	fmt.Fprintf(os.Stdout, " done. (-%d agencies [-%.2f%%])\n", len(agencies), 100.0 * float64(len(agencies)) / float64(len(feed.Agencies)))
+	return removedTrips
 }

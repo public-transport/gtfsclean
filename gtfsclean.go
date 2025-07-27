@@ -132,6 +132,7 @@ func main() {
 	emptyStrRepl := flag.StringP("empty-str-repl", "p", "", "string to use if a non-critical required string field is empty (like stop_name, agency_name, ...)")
 	emptyAgencyUrlRepl := flag.String("empty-agency-url-repl", "", "url to use if agency_url is empty")
 	removeAgencyNames := flag.StringSlice("drop-agency-names", []string{}, "names of agencies to remove")
+	keepAgencyNames := flag.StringSlice("keep-agency-names", []string{}, "names of agencies to keep")
 	dropErroneousEntities := flag.BoolP("drop-errs", "D", false, "drop erroneous entries from feed")
 	checkNullCoords := flag.BoolP("check-null-coords", "n", false, "check for (0, 0) coordinates")
 
@@ -541,9 +542,16 @@ func main() {
 		os.Exit(1)
 	} else {
 		minzers := make([]processors.Processor, 0)
+		if len(*removeAgencyNames) > 0 && len(*keepAgencyNames) > 0 {
+			fmt.Fprintln(os.Stderr, "You cannot use both --drop-agency-names and --keep-agency-names at the same time.")
+			os.Exit(1)
+		}
 
-		if removeAgencyNames != nil && len(*removeAgencyNames) > 0 {
-			minzers = append(minzers, processors.AgencyFilter{NamesToRemove: *removeAgencyNames})
+		if (removeAgencyNames != nil && len(*removeAgencyNames) > 0) || (keepAgencyNames != nil && len(*keepAgencyNames) > 0) {
+			minzers = append(minzers, processors.AgencyFilter{
+				NamesToRemove: *removeAgencyNames,
+				NamesToKeep:   *keepAgencyNames,
+			})
 		}
 
 		var err error = nil
