@@ -541,18 +541,19 @@ func main() {
 		fmt.Fprintln(os.Stdout, "\nYou may want to try running gtfsclean with --fix for error fixing / skipping. See --help for details.")
 		os.Exit(1)
 	} else {
-		minzers := make([]processors.Processor, 0)
+            minzers := make([]processors.Processor, 0)
+            if len(*removeAgencyNames) > 0 && len(*keepAgencyNames) > 0 {
+                fmt.Fprintln(os.Stderr, "You cannot use both --drop-agency-names and --keep-agency-names at the same time.")
+                os.Exit(1)
+            }
 
-        if (removeAgencyNames != nil && len(*removeAgencyNames) > 0) || (keepAgencyNames != nil && len(*keepAgencyNames) > 0) {
-            minzers = append(minzers, processors.AgencyFilter{
-                NamesToRemove: *removeAgencyNames,
-                NamesToKeep:   *keepAgencyNames,
-            })
-        }
-        if len(*removeAgencyNames) > 0 && len(*keepAgencyNames) > 0 {
-            fmt.Fprintln(os.Stderr, "You cannot use both --drop-agency-names and --keep-agency-names at the same time.")
-            os.Exit(1)
-        }
+            if (removeAgencyNames != nil && len(*removeAgencyNames) > 0) || (keepAgencyNames != nil && len(*keepAgencyNames) > 0) {
+                minzers = append(minzers, processors.AgencyFilter{
+                    NamesToRemove: *removeAgencyNames,
+                    NamesToKeep:   *keepAgencyNames,
+                })
+            }
+
 
 		var err error = nil
 		var copyTripNameRe *regexp.Regexp = nil
