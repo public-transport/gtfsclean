@@ -9,6 +9,7 @@ package processors
 import (
 	"errors"
 	"fmt"
+	"math"
 	"os"
 
 	"github.com/public-transport/gtfsparser"
@@ -82,6 +83,38 @@ func (sm ServiceCalDatesRem) Run(feed *gtfsparser.Feed) {
 
 	for _, trip := range newTrips {
 		feed.Trips[trip.Id] = trip
+	}
+
+	feedEndDate := (*gtfs.Date)(nil);
+	for _, service := range feed.Services {
+		if feedEndDate == nil {
+			endDate := service.End_date();
+			feedEndDate = &endDate;
+		} else if service.End_date().GetTime().After(feedEndDate.GetTime()) {
+			endDate := service.End_date();
+			feedEndDate = &endDate;
+		}
+	}
+
+	for _, service := range feed.Services {
+		// Check if service ends in the week of the feed end
+		if service.End_date().GetOffsettedDate(7).GetTime().Before(feedEndDate.GetTime()) {
+			continue
+		}
+
+		canExtend := true
+		extendedDate := service.End_date();
+
+		missingDays := int(math.Round(feedEndDate.GetTime().Sub(service.End_date().GetTime()).Hours() / 24));
+
+		for i := 1; i <= missingDays; i++ {
+			extendedDate = service.End_date().GetOffsettedDate(i)
+			canExtend = canExtend && !service.Daymap(int(extendedDate.GetTime().Weekday()))
+		}
+
+		if canExtend {
+			service.SetEnd_date(extendedDate)
+		}
 	}
 
 	calAfter, datesAfter := sm.countServices(feed)
