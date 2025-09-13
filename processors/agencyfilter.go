@@ -47,7 +47,7 @@ func runKeepOnly(feed *gtfsparser.Feed, namesToKeep []string) (int, int) {
 		}
 	}
 
-	removedTrips := removeAgencyTrips(feed, removedAgencies)
+	removedTrips := removeAgencyDependants(feed, removedAgencies)
 	return len(removedAgencies), removedTrips
 }
 
@@ -62,16 +62,25 @@ func runRemove(feed *gtfsparser.Feed, namesToRemove []string) (int, int) {
 		}
 	}
 
-	removedTrips := removeAgencyTrips(feed, removedAgencies)
+	removedTrips := removeAgencyDependants(feed, removedAgencies)
 	return len(removedAgencies), removedTrips
 }
 
-func removeAgencyTrips(feed *gtfsparser.Feed, removedAgencies []string) int {
+func removeAgencyDependants(feed *gtfsparser.Feed, removedAgencies []string) int {
 	removedTrips := 0
 	for tripId := range feed.Trips {
 		if slices.Contains(removedAgencies, feed.Trips[tripId].Route.Agency.Id) {
 			feed.DeleteTrip(tripId)
-			removedTrips += 1
+		}
+	}
+	for routeId := range feed.Routes {
+		if slices.Contains(removedAgencies, feed.Routes[routeId].Agency.Id) {
+			delete(feed.Routes, routeId)
+		}
+	}
+	for fareAttr := range feed.FareAttributes {
+		if slices.Contains(removedAgencies, feed.FareAttributes[fareAttr].Agency.Id) {
+			delete(feed.FareAttributes, fareAttr)
 		}
 	}
 	return removedTrips
