@@ -50,6 +50,12 @@ func (f TooFastTripRemover) Run(feed *gtfsparser.Feed) {
 			}
 
 			if dist >= 7000 {
+				if t.Route.Type == 1100 {
+					if speed > 1500 {
+						feed.DeleteTrip(id)
+					}
+					break
+				}
 				if gtfs.GetTypeFromExtended(t.Route.Type) == 0 && speed > 100 {
 					feed.DeleteTrip(id)
 					break
@@ -124,6 +130,12 @@ func (f TooFastTripRemover) Run(feed *gtfsparser.Feed) {
 				}
 
 				if dist >= 10000 {
+					if t.Route.Type == 1100 {
+						if speed > 1500 {
+							feed.DeleteTrip(id)
+						}
+						break
+					}
 					if gtfs.GetTypeFromExtended(t.Route.Type) == 0 && speed > 100 {
 						feed.DeleteTrip(id)
 						break
