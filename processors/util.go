@@ -77,7 +77,7 @@ func distP(a *gtfs.ShapePoint, b *gtfs.ShapePoint) float64 {
 
 // Distance between two stops
 func distSApprox(a *gtfs.Stop, b *gtfs.Stop) float64 {
-	return haversineApprox(float64(a.Lat), float64(a.Lon), float64(b.Lat), float64(b.Lon))
+	return haversine(float64(a.Lat), float64(a.Lon), float64(b.Lat), float64(b.Lon))
 }
 
 // Calculate the distance in meter between two lat,lng pairs
